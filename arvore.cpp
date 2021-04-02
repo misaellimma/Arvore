@@ -3,10 +3,10 @@
 
 struct arvore{
     int num;
-    struct arvore* esq;
-    struct arvore* dir;
+    struct arvore *esq;
+    struct arvore *dir;
 };
-typedef struct arvore Arvore;
+typedef struct arvore* Arvore;
 
 void inicia_arvore(Arvore* ARVORE);
 Arvore* insere(Arvore* ARVORE, int num);
@@ -14,10 +14,17 @@ Arvore* retira(Arvore* ARVORE, int num);
 int menu();
 void executa_opcao(int op, Arvore* ARVORE);
 
+Arvore* cria_arvore(){
+    Arvore* ARVORE = (Arvore*) malloc(sizeof(Arvore));
+    if(ARVORE != NULL){
+        *ARVORE = NULL;
+    }
+    return ARVORE;
+}
 
 int main(){
     int op;
-    Arvore *ARVORE = /*(Arvore*)malloc(sizeof(Arvore))*/NULL;
+    Arvore *ARVORE = cria_arvore();
     //inicia_arvore(ARVORE);
 
 /*
@@ -26,7 +33,8 @@ int main(){
         //exit(1);
     }else{*/
         //inicia_arvore(ARVORE);
-        //printf("..%d..\n", &ARVORE);/*
+        //printf("..%d..\n", &ARVORE);
+        /*
         ARVORE = insere(ARVORE, 10);
 
         ARVORE = insere(ARVORE, 5);
@@ -35,7 +43,7 @@ int main(){
         ARVORE = insere(ARVORE, 7);
         ARVORE = insere(ARVORE, 20);
         ARVORE = insere(ARVORE, 33);
-        ARVORE = insere(ARVORE, 30);
+        ARVORE = insere(ARVORE, 30);*/
 
         do{
             op = menu();
@@ -107,29 +115,33 @@ void executa_opcao(int op, Arvore* ARVORE){
         break;
     }
 }
-
+/*
 void inicia_arvore(Arvore* ARVORE){
     ARVORE->dir = NULL;
     ARVORE->esq = NULL;
     ARVORE->num = NULL;
 }
-
+*/
 void imprimePreOrdem(Arvore* ARVORE){
     if(ARVORE == NULL)
         return;
-    if(ARVORE != NULL){
-        printf("%d \n", ARVORE->num);
-        imprimePreOrdem(ARVORE->esq);
-        imprimePreOrdem(ARVORE->dir);
+    if(*ARVORE != NULL){
+        printf("%d \n", (*ARVORE)->num);
+        imprimePreOrdem(&((*ARVORE)->esq));
+        imprimePreOrdem(&((*ARVORE)->dir));
     }
 }
-
+/*
 void imprime_ordem(Arvore* ARVORE){
     if(ARVORE == NULL)
         return;
     if(ARVORE != NULL){
         imprime_ordem(ARVORE->esq);
         printf("%d \n", ARVORE->num);
+        printf("%d", ARVORE);
+        printf(" esq %d", ARVORE->esq);
+        printf(" dir %d\n\n", ARVORE->dir);
+
         imprime_ordem(ARVORE->dir);
     }
 }
@@ -142,11 +154,11 @@ void imprimePosOrdem(Arvore* ARVORE){
         imprimePosOrdem(ARVORE->dir);
         printf("%d \n", ARVORE->num);
     }
-}
+}*/
 
 Arvore* insere(Arvore* ARVORE, int num){
     if(ARVORE == NULL){
-        Arvore *aux = (Arvore*)malloc(sizeof(Arvore));
+        Arvore *aux = (struct Arvore*)malloc(sizeof(Arvore));
         aux->num = num;
         aux->esq = NULL;
         aux->dir = NULL;
@@ -157,24 +169,6 @@ Arvore* insere(Arvore* ARVORE, int num){
         ARVORE->esq = insere(ARVORE->esq, num);
     }
     return ARVORE;
-        //printf("..%d..\n", ARVORE->esq);
-    //printf("..%d..\n", ARVORE->dir);
-
-/*
-    if(ARVORE == NULL){
-        ARVORE = (Arvore *) malloc(sizeof(Arvore));
-        ARVORE->num = num;
-        ARVORE->esq = NULL;
-        ARVORE->dir = NULL;
-        printf("%d ", ARVORE->num);
-    }else if(num < ARVORE->num){
-        printf("%d ", ARVORE->num);
-        ARVORE->esq = insere(ARVORE->esq, num);
-    }else if(num > ARVORE->num){
-        printf("%d ", ARVORE->num);
-        ARVORE->dir = insere(ARVORE->dir, num);
-    }
-    return ARVORE;*/
 }
 
 Arvore* min(Arvore* ARVORE){
@@ -199,6 +193,19 @@ Arvore* max(Arvore* ARVORE){
     return NULL;
 }
 
+int totalNo_arv(Arvore* ARVORE){
+    if(ARVORE == NULL)
+        return 0;
+    int altEsq = totalNo_arv(&(*ARVORE->esq));
+    int altDir = totalNo_arv(&(*ARVORE->dir));
+
+    printf("\n alt esq %d *", altEsq);
+    printf(" alt dir %d\n", altDir);
+    return(altEsq + 1);
+    //return altDir;
+
+}
+
 Arvore* retira(Arvore* ARVORE, int num){
     if(ARVORE == NULL){
         return NULL;
@@ -208,27 +215,53 @@ Arvore* retira(Arvore* ARVORE, int num){
         ARVORE->dir = retira(ARVORE->dir, num);
     }else{
         if(ARVORE->esq == NULL && ARVORE->dir == NULL){
+            int a = totalNo_arv(ARVORE);
+            printf("\n qtde %d\n", a);
             free(ARVORE);
             return NULL;
         }else if(ARVORE->esq == NULL && ARVORE->dir != NULL){
-            Arvore* aux = ARVORE->dir;
-            free(ARVORE);
+            Arvore* aux;
+            int a = totalNo_arv(ARVORE);
+            printf("\n qtde %d\n", a);
+            if(a == 1){
+                aux = min(ARVORE->dir);
+                Arvore* tmp = aux->num;
+                ARVORE = retira(ARVORE, aux->num);
+                ARVORE->num = tmp;
+            }else{
+                aux = ARVORE->dir;
+                free(ARVORE);
+            }
             return aux;
         }else if(ARVORE->dir == NULL && ARVORE->esq != NULL){
+            int a = totalNo_arv(ARVORE);
+            printf("\n qtde %d\n", a);
             Arvore* aux = ARVORE->esq;
             free(ARVORE);
             return aux;
         }else{
             Arvore* aux;
+            printf("%d\n", ARVORE);
+            printf("dir %d\n", ARVORE->dir);
+            printf("esq %d\n", ARVORE->esq);
+            printf("num %d\n", ARVORE->num);
+            int a = totalNo_arv(ARVORE);
+            printf("\n qtde %d\n", a);
+
             if(ARVORE->dir != NULL){
-                aux = min(ARVORE->dir);
+                printf("estamos aqui if");
+                aux = max(ARVORE->esq);
+                a = totalNo_arv(ARVORE);
+            printf("\n qtde %d\n", a);
             }else{
+                printf("estamos aqui else");
+
                 aux = max(ARVORE->esq);
             }
             Arvore* tmp = aux->num;
             ARVORE = retira(ARVORE, aux->num);
             ARVORE->num = tmp;
         }
-    }
+    } 
     return ARVORE;
 }
