@@ -8,10 +8,12 @@ struct Node{
 };
 typedef struct Node* Arvore;
 
-int menu();
+int menuPrincipal();
+int menuSecundario();
 void limpaTela();
 Arvore* cria_Arvore();
-void executaOpcao(Arvore* raiz, int opt);
+void executaMenuPrincipal(Arvore* raiz, int opt);
+void executaMenuSecundario(Arvore* raiz, int op);
 void imprimePreOrdem(Arvore *raiz);
 void imprimeEmOrdem(Arvore *raiz);
 void imprimePosOrdem(Arvore *raiz);
@@ -21,12 +23,13 @@ struct Node* removeAtual(struct Node* atual);
 	
 int main(){
 	Arvore* raiz = cria_Arvore();
-	int op;
+	int op1;
+	int op2;
 
 	do{
-        op = menu();
-        executaOpcao(raiz, op);
-    }while(op != 0);
+        op1 = menuPrincipal();
+        executaMenuPrincipal(raiz, op1);
+    }while(op1 != 4);
 	
 	return 0;
 }
@@ -39,16 +42,27 @@ Arvore* cria_Arvore(){
 	return raiz;
 }
 
-int menu(){
+int menuPrincipal(){
 	int opcao;
     
     printf("\nEscolha uma opcao:\n");
-    printf("Digite 0 para sair\n");
-    printf("Digite 1 para adicionar na arvore\n");
-    printf("Digite 2 para remover da arvore\n");
-    printf("Digite 3 para listar em pre ordem\n");
-    printf("Digite 4 para listar em ordem\n");
-    printf("Digite 5 para listar em pos ordem\n");
+    printf("1. Imprimir\n");
+    printf("2. Inserir novo valor\n");
+    printf("3. Remover da arvore\n");
+    printf("4. Sair\n");
+    printf(">> ");
+    scanf("%d", &opcao);
+    
+    return opcao;
+}
+
+int menuSecundario(){
+	int opcao;
+    
+    printf("\nEscolha uma opcao:\n");
+    printf("1. Pre-Ordem\n");
+    printf("2. Em-Ordem\n");
+    printf("3. Pos-Ordem\n");
     printf(">> ");
     scanf("%d", &opcao);
     
@@ -59,40 +73,55 @@ void limpaTela(){
     system("cls");
 }
 
-void executaOpcao(Arvore* raiz, int op){
+void executaMenuPrincipal(Arvore* raiz, int op){
 	int num;
     switch (op){
-    case 0:
-        limpaTela();
-        printf("Encerrando...");
-        break;
     case 1:
+        limpaTela();
+		int op2 = menuSecundario();
+		executaMenuSecundario(raiz, op2);
+        break;
+    case 2:
         limpaTela();
         printf("Inserindo na arvore\n\n");
         printf("Digite um numero: ");
         scanf("%d", &num);
         raiz = inserirNo(raiz, num);
         break;
-    case 2:
+    case 3:
         limpaTela();
         printf("removendo da arvore\n\n");
         printf("Digite um numero para ser removido: ");
         scanf("%d", &num);
         raiz = removerNo(raiz, num);
         break;
-    case 3:
-        limpaTela();
-        printf("listando em pre ordem\n\n");
-        imprimePreOrdem(raiz);
-        break;
     case 4:
         limpaTela();
-        printf("listando em ordem\n\n");
+        printf("Saindo...");
+        break;
+    default:
+        limpaTela();
+        printf("Comando invalido!\n\n");
+        break;
+    }
+}
+
+void executaMenuSecundario(Arvore* raiz, int op){
+	int num;
+    switch (op){
+    case 1:
+        limpaTela();
+        printf("listando em Pre Ordem\n\n");
+        imprimePreOrdem(raiz);
+        break;
+    case 2:
+        limpaTela();
+        printf("listando em Em Ordem\n\n");
         imprimeEmOrdem(raiz);
         break;
-    case 5:
+    case 3:
         limpaTela();
-        printf("listando em pos ordem\n\n");
+        printf("listando em Pos Ordem\n\n");
         imprimePosOrdem(raiz);
         break;
     default:

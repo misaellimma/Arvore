@@ -1,3 +1,4 @@
+/*
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -31,10 +32,10 @@ int main(){
     if(!ARVORE){
         printf(" memoria cheia");
         //exit(1);
-    }else{*/
+    }else{
         //inicia_arvore(ARVORE);
         //printf("..%d..\n", &ARVORE);
-        /*
+        
         ARVORE = insere(ARVORE, 10);
 
         ARVORE = insere(ARVORE, 5);
@@ -43,7 +44,7 @@ int main(){
         ARVORE = insere(ARVORE, 7);
         ARVORE = insere(ARVORE, 20);
         ARVORE = insere(ARVORE, 33);
-        ARVORE = insere(ARVORE, 30);*/
+        ARVORE = insere(ARVORE, 30);
 
         do{
             op = menu();
@@ -121,7 +122,7 @@ void inicia_arvore(Arvore* ARVORE){
     ARVORE->esq = NULL;
     ARVORE->num = NULL;
 }
-*/
+
 void imprimePreOrdem(Arvore* ARVORE){
     if(ARVORE == NULL)
         return;
@@ -154,7 +155,7 @@ void imprimePosOrdem(Arvore* ARVORE){
         imprimePosOrdem(ARVORE->dir);
         printf("%d \n", ARVORE->num);
     }
-}*/
+}
 
 Arvore* insere(Arvore* ARVORE, int num){
     if(ARVORE == NULL){
@@ -264,4 +265,4 @@ Arvore* retira(Arvore* ARVORE, int num){
         }
     } 
     return ARVORE;
-}
+}*/
