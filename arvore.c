@@ -12,7 +12,7 @@ int menuPrincipal();
 int menuSecundario();
 void limpaTela();
 Arvore* cria_Arvore();
-void executaMenuPrincipal(Arvore* raiz, int opt);
+void executaMenuPrincipal(Arvore* raiz, int op);
 void executaMenuSecundario(Arvore* raiz, int op);
 void imprimePreOrdem(Arvore *raiz);
 void imprimeEmOrdem(Arvore *raiz);
@@ -23,13 +23,12 @@ struct Node* removeAtual(struct Node* atual);
 	
 int main(){
 	Arvore* raiz = cria_Arvore();
-	int op1;
-	int op2;
+	int op;
 
 	do{
-        op1 = menuPrincipal();
-        executaMenuPrincipal(raiz, op1);
-    }while(op1 != 4);
+        op = menuPrincipal();
+        executaMenuPrincipal(raiz, op);
+    }while(op != 4);
 	
 	return 0;
 }
