@@ -69,7 +69,13 @@ int menuSecundario(){
 }
 
 void limpaTela(){
-    system("cls");
+    #ifdef linux
+    	system("clear");
+	#elif win32
+		system("cls");
+	#else
+	#error plataforma nao suportada
+	#endif
 }
 
 void executaMenuPrincipal(Arvore* raiz, int op){
