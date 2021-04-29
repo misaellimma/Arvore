@@ -10,7 +10,7 @@ typedef struct Node* Arvore;
 
 int menuPrincipal();
 int menuSecundario();
-void limpaTela();
+void limparTela();
 Arvore* cria_Arvore();
 void executaMenuPrincipal(Arvore* raiz, int op);
 void executaMenuSecundario(Arvore* raiz, int op);
@@ -68,13 +68,12 @@ int menuSecundario(){
     return opcao;
 }
 
-void limpaTela(){
+void limparTela(){
+	//Detecta se e linux ou windows, para limpar a tela sem erros
     #ifdef linux
     	system("clear");
-	#elif win32
+	#elif WIN32
 		system("cls");
-	#else
-	#error plataforma nao suportada
 	#endif
 }
 

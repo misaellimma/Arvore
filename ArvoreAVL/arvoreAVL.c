@@ -11,7 +11,7 @@ typedef struct NO* arvoreAVL;
 
 int menuPrincipal();
 int menuSecundario();
-void limpaTela();
+void limparTela();
 arvoreAVL* cria_Arvore();
 void executaMenuPrincipal(arvoreAVL* raiz, int op);
 void executaMenuSecundario(arvoreAVL* raiz, int op);
@@ -67,13 +67,12 @@ int menuSecundario(){
     return opcao;
 }
 
-void limpaTela(){
+void limparTela(){
+    //Detecta se e linux ou windows, para limpar a tela sem erros.
     #ifdef linux
         system("clear");
-    #elif win32
+    #elif WIN32
         system("cls");
-    #else
-        #error ""
     #endif
 }
 
@@ -81,7 +80,7 @@ void executaMenuPrincipal(arvoreAVL* raiz, int op){
 	int num;
     switch (op){
     case 1:
-        limpaTela();
+        limparTela();
 		int op2;
         do{
             op2 = menuSecundario();
@@ -89,25 +88,25 @@ void executaMenuPrincipal(arvoreAVL* raiz, int op){
         }while(op2 != 4);
         break;
     case 2:
-        limpaTela();
+        limparTela();
         printf("Inserindo na arvore\n\n");
         printf("Digite um numero: ");
         scanf("%d", &num);
         //raiz = inserirNo(raiz, num);
         break;
     case 3:
-        limpaTela();
+        limparTela();
         printf("removendo da arvore\n\n");
         printf("Digite um numero para ser removido: ");
         scanf("%d", &num);
         //raiz = removerNo(raiz, num);
         break;
     case 4:
-        limpaTela();
+        limparTela();
         printf("Saindo...\n");
         break;
     default:
-        limpaTela();
+        limparTela();
         printf("Comando invalido!\n\n");
         break;
     }
@@ -117,25 +116,25 @@ void executaMenuSecundario(arvoreAVL* raiz, int op){
 	int num;
     switch (op){
     case 1:
-        limpaTela();
+        limparTela();
         printf("listando em Pre Ordem\n\n");
         imprimePreOrdem(raiz);
         break;
     case 2:
-        limpaTela();
+        limparTela();
         printf("listando em Em Ordem\n\n");
         imprimeEmOrdem(raiz);
         break;
     case 3:
-        limpaTela();
+        limparTela();
         printf("listando em Pos Ordem\n\n");
         imprimePosOrdem(raiz);
         break;
     case 4:
-        limpaTela();
+        limparTela();
         break;
     default:
-        limpaTela();
+        limparTela();
         printf("Comando invalido!\n\n");
         break;
     }
