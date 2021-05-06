@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ArvoreAVL.h"
+#include <ArvoreAVL.h>
 
 int main(){
     ArvAVL* avl;
