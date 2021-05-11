@@ -1,11 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<math.h>
+#include<string.h>
+#include<time.h>
 
-const TAM = 10;
+#define TAM 100000
+int vetor[TAM];
 
 void lerArquivo(char nome[]);
-void bubleSort();
+void bubleSort(int vet[]);
+void imprimeVetor(int vetor[]);
+void funcao(char url[], char nome[]);
 
 
 int main(){
@@ -13,66 +17,78 @@ int main(){
     char ordeminversa[] = "ordeminversa.txt";
     char aleatorio[] = "aleatorio.txt";
 
-    lerArquivo(ordenado);
-
-    int i, j, aux;
-    int vet[10] = {5, 1, 30, 50, 4, 20, 6, 7, 8, 9};
-    
-    for(i = 0; i < TAM; i++){
-        printf(" %d", vet[i]);
-    }
+    funcao(ordenado, "Ordenado");
+    funcao(ordeminversa, "Ordem inversa");
+    funcao(aleatorio, "Aleatorio");
     printf("\n");
-    
-    for(i = 1; i < TAM; i++){
-        for(j = 0; j < TAM; j++){
-            if(vet[j] > vet[j + 1]){
-                aux = vet[j];
-                vet[j] = vet[j + 1];
-                vet[j + 1] = aux;
-            }
-        }
-    }
-    for(i = 0; i < TAM; i++){
-        printf(" %d", vet[i]);
-    }
-
-
     return 0;
 }
 
+void funcao(char url[], char nome[]){
+    clock_t tempo_1, tempo_2;
+    lerArquivo(url);
+    tempo_1 = clock();
+    bubleSort(vetor);
+    tempo_2 = clock();
+
+    double dif = tempo_2 - tempo_1;
+
+    printf("\n Tempo de execucao %s: %f\n", nome, (dif));
+}
+
+void charToInt(char texto[]){
+    int i = 1;
+    char *retorno;
+    retorno = strtok(texto, " ");
+    vetor[0] = atoi(retorno);
+    do{
+        retorno = strtok('\0', " ");
+        if(retorno){
+            vetor[i] = atoi(retorno);
+        }
+        i++;
+    }while(retorno);
+}
+
 void lerArquivo(char nome[]){
-    printf("arquivo %s ", nome);
+    int c;
+    char texto[588895]; //588895
     FILE *arquivo = fopen(nome, "r");
-    if(arquivo == NULL){
+    if(!arquivo){
         printf("\n Erro na abertura do arquivo");
         exit(1);
+    }else{
+        int i = 0;
+        while((c = getc(arquivo)) != EOF){
+            texto[i] = c;
+            i++;
+        }
+        charToInt(texto);
     }
-    int numero;
-    printf("\n teste");
-    /*while(scanf("%d", &numero) == 1){
-        printf(" %d");
-    }*/
     fclose(arquivo);
-/*
-    int vetor[1000];
-    while(!feof(f)){
-        fscanf(f, "");
-    }*/
 }
 
-void gravarArquivo(){
+void bubleSort(int vet[]){
+    int i, j, aux;
 
-}
-
-void bubleSort(){
-    int i, j, vet[TAM], aux;
-    for(i = 1; i < TAM; i++){
-        for(j = 0; j < TAM; j++){
-            if(vet[j] > vet[j + 1]){
-                aux = vet[j];
-                vet[j] = vet[j + 1];
-                vet[j + 1] = aux;
+    //valor da esquerda sendo analizado
+    for(i = 0; i < TAM; i++){
+        //valor da direita sendo analisado
+        for(j = i +1; j < TAM; j++){
+            //confere se precisa fazer a troca
+            if(vet[i] > vet[j]){
+                aux = vet[i];
+                vet[i] = vet[j];
+                vet[j] = aux;
             }
         }
     }
+}
+
+void imprimeVetor(int vetor[]){
+    int i;
+    for(i = 0; i < TAM; i++){
+        printf(" %d", vetor[i]);
+    }
+    printf("\n");
 }
