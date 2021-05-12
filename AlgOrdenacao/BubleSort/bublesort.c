@@ -66,8 +66,6 @@ void charToInt(char texto[]){
 
         i++;
     }while(retorno);
-
-    imprimeVetor(vetor);
 }
 //funcao que le o arquivo
 void lerArquivo(char nome[]){

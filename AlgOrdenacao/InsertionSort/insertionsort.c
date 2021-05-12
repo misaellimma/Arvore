@@ -37,6 +37,7 @@ void funcao(char url[], char nome[]){
     
     lerArquivo(url);//chama a funcao para ler o arquivo.
     tempo_1 = clock();//registra o tempo do clock.
+    imprimeVetor(vetor);
     insertionSort(vetor);//chama a funcao para ordenar o vetor
     tempo_2 = clock();//registra o tempo do clock
     
@@ -67,7 +68,7 @@ void charToInt(char texto[]){
         i++;
     }while(retorno);
 
-    imprimeVetor(vetor);
+    //imprimeVetor(vetor);
 }
 //funcao que le o arquivo
 void lerArquivo(char nome[]){
@@ -92,9 +93,19 @@ void lerArquivo(char nome[]){
 //funcao de ordenacao
 void insertionSort(int vet[]){
     //declaracao das variaveis.
-    int i, j, aux;
+    int i, j, atual;
 
-    
+    for(i = 1; i < TAM; i++){
+        atual = vetor[i];
+        j = i - 1;
+
+        while((j >= 0) && (atual < vetor[j])){
+            vetor[j + 1] = vetor[j];
+            j = j - 1;
+        }
+
+        vetor[j + 1] = atual;
+    }
 }
 
 void imprimeVetor(int vetor[]){
