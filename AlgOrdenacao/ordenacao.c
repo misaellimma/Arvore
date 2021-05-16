@@ -100,7 +100,7 @@ void charToInt(char texto[]){
 void lerArquivo(char nome[]){
     //declaracao das variaveis
     int c;
-    char texto[588895]; //588895 tamanho do vetor
+    char texto[588897]; //588897 tamanho do vetor
     FILE *arquivo = fopen(nome, "r");//funcao que abre o arquivo
     if(!arquivo){
         printf("\n Erro na abertura do arquivo");

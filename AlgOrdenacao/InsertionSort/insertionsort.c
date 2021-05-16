@@ -96,15 +96,17 @@ void insertionSort(int vet[]){
     int i, j, atual;
 
     for(i = 1; i < TAM; i++){
-        atual = vetor[i];
-        j = i - 1;
+        atual = vetor[i];//elemento atual em analise
+
+        j = i - 1;//elemento anterior ao analisado
 
         while((j >= 0) && (atual < vetor[j])){
-            vetor[j + 1] = vetor[j];
-            j = j - 1;
+            vetor[j + 1] = vetor[j];//posiciona os elementos uma posicao para frente
+
+            j = j - 1;//faz o "j" andar para trás
         }
 
-        vetor[j + 1] = atual;
+        vetor[j + 1] = atual;//colocamos o atual (menor numero) na posicao correta
     }
 }
 
